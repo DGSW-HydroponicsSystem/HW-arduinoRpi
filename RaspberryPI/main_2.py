@@ -1,8 +1,6 @@
 import json
-
-import self as self
 import serial
-from paho.mqtt.client import mqtt
+import paho.mqtt.client as mqtt
 
 
 def on_connect(client, userdata, flags, rc):
