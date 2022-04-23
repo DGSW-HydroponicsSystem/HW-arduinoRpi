@@ -28,18 +28,18 @@ def on_message(client, userdata, msg):
                 ser2.write(b'f')
 
 def read_arduino():
-    msg = ser1.readline().decode('utf-8').rstrip()
+    msg = ser1.readline()
     if msg is not None:
         return msg
     else:
-        msg = ser2.readline().decode('utf-8').rstrip()
+        msg = ser2.readline()
         if msg is not None:
             return msg
         else:
             return None
 
 def split_string(msg):
-    index = msg.split('/')
+    index = list(bytes(msg))
     for x in range(index):
         index[x] = int(index[x])
 
@@ -48,10 +48,12 @@ def split_string(msg):
         temperature2 = index[2]
         humidity1 = index[3]
         humidity2 = index[4]
-        sunlight = index[5]
-        watertemp = index[6]
-        waterlevel = index[7]
-        waterph = index[8]
+        sunlight1 = index[5]
+        sunlight2 = index[6]
+        watertemp1 = index[7]
+        watertemp2 = index[8]
+        waterlevel = index[9]
+        waterph = index[10]
 
         return {
             'Key' : 0,
@@ -59,8 +61,10 @@ def split_string(msg):
             'temperature2' : temperature2,
             'humidity1' : humidity1,
             'humidity2' : humidity2,
-            'sunlight' : sunlight,
-            'watertemp' : watertemp,
+            'sunlight1' : sunlight1,
+            'sunlight2' : sunlight2,
+            'watertemp1' : watertemp1,
+            'watertemp2' : watertemp2,
             'waterlevel' : waterlevel,
             'waterph' : waterph
         }
@@ -71,7 +75,7 @@ def split_string(msg):
 
         return {
             'Key' : 1,
-            'waterpump' : waterpumpstat,
+            'waterpumpstat' : waterpumpstat,
             'ledstat' : ledstat,
             'fanstat' : fanstat
         }
@@ -108,5 +112,7 @@ try:
 
 except Exception as E:
     print(E)
+    ser1.close()
+    ser2.close()
     pass
 

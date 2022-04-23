@@ -8,7 +8,7 @@
 // Dallas Temperature (by Miles Burton)
 
 // Debugging setting
-#define DEBUG 1
+//#define DEBUG 1
 
 // Baudrate setting
 #define BAUDRATE 9600
@@ -62,7 +62,7 @@ int sunshine2 = 0;       // 2층 일조량
 int waterTemp1 = 0;      // 1층 수온
 int waterTemp2 = 0;      // 2층 수온
 int waterLevel = 0;     // 물높이
-float waterPH = 0;        // 물 산성도
+int waterPH = 0;        // 물 산성도
 // -------------------------------
 
 void loop() {
@@ -84,7 +84,7 @@ void sensor() {
   waterTemp1 = wT1.getTempCByIndex(0);
   waterTemp2 = wT2.getTempCByIndex(0);
   waterLevel = waterLevelMeasurement();
-  waterPH = waterPHMeasurement();
+  waterPH = waterPHMeasurement() * 100;
 }
 
 int waterLevelMeasurement() {
@@ -127,17 +127,17 @@ void sendStat() {
   Serial.print("ph:");  Serial.print(waterPH);
   Serial.println();
 #else
-  Serial.write('0');            Serial.write('/');
-  Serial.write(temperature1);   Serial.write('/');
-  Serial.write(humidity1);      Serial.write('/');
-  Serial.write(temperature2);   Serial.write('/');
-  Serial.write(humidity2);      Serial.write('/');
-  Serial.write(sunshine1);      Serial.write('/');
-  Serial.write(sunshine2);      Serial.write('/');
-  Serial.write(waterTemp1);     Serial.write('/');
-  Serial.write(waterTemp2);     Serial.write('/');
-  Serial.write(waterLevel);     Serial.write('/');
-  Serial.write(waterPH);        Serial.write('/');
+  Serial.write('\x00');
+  Serial.write(temperature1);
+  Serial.write(humidity1);
+  Serial.write(temperature2);
+  Serial.write(humidity2);
+  Serial.write(sunshine1);
+  Serial.write(sunshine2);
+  Serial.write(waterTemp1);
+  Serial.write(waterTemp2);
+  Serial.write(waterLevel);
+  Serial.write(waterPH);
   Serial.write('\n');
 #endif
 }

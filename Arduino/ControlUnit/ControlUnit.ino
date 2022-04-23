@@ -4,7 +4,7 @@
 // ------------------------------------------------------
 
 // Debugging setting
-#define DEBUG 1
+//#define DEBUG 1
 
 // Baudrate setting
 #define BAUDRATE 9600
@@ -27,6 +27,15 @@ void setup() {
   pinMode(WATER_VOL_PIN, OUTPUT);
   pinMode(LED_PIN, OUTPUT);
   pinMode(FAN_PIN, OUTPUT);
+
+  if(digitalRead(WATER_GND_PIN)) waterPump_stat = 1;
+  else if(!digitalRead(WATER_GND_PIN)) waterPump_stat = 0;
+  if(digitalRead(LED_PIN)) led_stat = 1;
+  else if(!digitalRead(LED_PIN)) led_stat = 0;
+  if(digitalRead(FAN_PIN)) fan_stat = 1;
+  else if(!digitalRead(FAN_PIN)) fan_stat = 0;
+
+  sendStat();
 }
 
 void loop() {
@@ -74,10 +83,10 @@ void sendStat() {
   Serial.print("LED: "); Serial.print(led_stat);
   Serial.print("FAN: "); Serial.println(fan_stat);
 #else
-  Serial.write('1');              Serial.write('/');
-  Serial.write(waterPump_stat);   Serial.write('/');
-  Serial.write(led_stat);         Serial.write('/');
-  Serial.write(fan_stat);         Serial.write('/');
-  Serial.write('\n')
+  Serial.write('\x01');
+  Serial.write(waterPump_stat);
+  Serial.write(led_stat);
+  Serial.write(fan_stat);
+  Serial.write('\n');
 #endif
 }
