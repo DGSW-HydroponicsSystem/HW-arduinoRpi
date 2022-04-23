@@ -98,7 +98,8 @@ ser2 = serial.Serial('tty/ACM1', 9600, timeout=1)
 ser2.flushInput()
 
 try:
-    global ser1, ser2
+    global ser1
+    global ser2
     while True:
         data = read_arduino()
         if data is not None:
