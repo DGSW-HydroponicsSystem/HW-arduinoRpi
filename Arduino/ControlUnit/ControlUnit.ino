@@ -4,7 +4,7 @@
 // ------------------------------------------------------
 
 // Debugging setting
-//#define DEBUG 1
+//#define DEBUG 1 
 
 // Baudrate setting
 #define BAUDRATE 9600
@@ -42,7 +42,7 @@ void loop() {
   
 }
 
-void SerialEvent() {
+void serialEvent() {
   char msg = Serial.read();
 
   if(msg == 'W') {

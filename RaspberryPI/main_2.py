@@ -1,6 +1,7 @@
 import json
 import serial
 import paho.mqtt.client as mqtt
+import time
 
 
 def on_connect(client, userdata, flags, rc):
@@ -40,8 +41,6 @@ def read_arduino():
 
 def split_string(msg):
     index = list(bytes(msg))
-    for x in range(index):
-        index[x] = int(index[x])
 
     if index[0] == 0:
         temperature1 = index[1]
@@ -109,6 +108,7 @@ try:
         client.loop_read()
         ser1.flushInput()
         ser2.flushInput()
+        time.sleep(1)
 
 except Exception as E:
     print(E)
