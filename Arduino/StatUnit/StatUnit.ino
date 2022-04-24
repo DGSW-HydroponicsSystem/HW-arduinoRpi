@@ -37,7 +37,7 @@ DallasTemperature wT1(&ds1);
 DallasTemperature wT2(&ds2);
 
 // Water Level
-int waterLevel_Pin[10] = {2,3,4,5,6,7,8,9,10,11};
+int waterLevel_Pin[10] = {2,3,4,5};
 
 void setup() {
   Serial.begin(BAUDRATE);
@@ -46,7 +46,7 @@ void setup() {
   dht2.begin();
   wT1.begin();
   wT2.begin();
-  for(int i = 0; i < 10; i++)  {
+  for(int i = 0; i < 4; i++)  {
     pinMode(waterLevel_Pin[i], INPUT);
   }
   
@@ -89,7 +89,7 @@ void sensor() {
 
 int waterLevelMeasurement() {
   int level = 0;
-  for(int i = 0; i < 10; i++) {
+  for(int i = 0; i < 4; i++) {
     if(digitalRead(waterLevel_Pin[i]) == HIGH)
       level++;
     else
