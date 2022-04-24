@@ -29,11 +29,11 @@ def on_message(client, userdata, msg):
                 ser2.write(b'f')
 
 def read_arduino():
-    msg = ser1.readline()
+    msg = ser2.readline()
     if msg is not None:
         return msg
     else:
-        msg = ser2.readline()
+        msg = ser1.readline()
         if msg is not None:
             return msg
         else:
