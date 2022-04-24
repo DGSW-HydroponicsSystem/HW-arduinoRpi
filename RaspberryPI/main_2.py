@@ -29,15 +29,14 @@ def on_message(client, userdata, msg):
                 ser2.write(b'f')
 
 def read_arduino():
-    msg = ser2.readline()
-    if msg is not None:
-        return msg
+    msg1 = ser1.readline()
+    msg2 = ser2.readline()
+    if str(msg2) != "b''":
+        return msg2
+    elif str(msg1) != "b''":
+        return msg1
     else:
-        msg = ser1.readline()
-        if msg is not None:
-            return msg
-        else:
-            return None
+        return None
 
 def split_string(msg):
     index = list(bytes(msg))
@@ -52,7 +51,7 @@ def split_string(msg):
         watertemp1 = index[7]
         watertemp2 = index[8]
         waterlevel = index[9]
-        waterph = index[10]
+        waterph = index[10]/100
 
         return {
             'Key' : 0,
@@ -94,9 +93,7 @@ client.loop_start()
 
 # serial
 ser1 = serial.Serial('tty/ACM0', 9600, timeout=1)
-ser1.flushInput()
 ser2 = serial.Serial('tty/ACM1', 9600, timeout=1)
-ser2.flushInput()
 
 try:
     while True:
