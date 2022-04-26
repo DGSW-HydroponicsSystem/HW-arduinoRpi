@@ -99,8 +99,8 @@ client.connect(address, port)
 client.loop_start()
 
 # serial
-ser1 = serial.Serial('tty/ACM0', 9600, timeout=1)
-ser2 = serial.Serial('tty/ACM1', 9600, timeout=1)
+ser1 = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+ser2 = serial.Serial('/dev/ttyACM1', 9600, timeout=1)
 
 try:
     while True:
