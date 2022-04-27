@@ -6,7 +6,7 @@ import time
 
 def on_connect(client, userdata, flags, rc):
     print('connected')
-    client.subsribe('HydroponicsSystem/control')
+    client.subscribe('HydroponicsSystem/control')
 
 def on_message(client, userdata, msg):
     print(msg.topic, msg.payload)
